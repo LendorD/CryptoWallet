@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крипто Кошелек</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script>
+        function handleNetworkSelection(network) {
+            const walletName = prompt('Введите название кошелька:');
+            if (walletName) {
+                const url = `/${network}/NewAddress/${walletName}`;
+                window.location.href = url;
+            } else {
+                alert('Название кошелька не может быть пустым!');
+            }
+        }
+
+        function sendTransaction(network) {
+            const url = `/${network}/send-transaction`;
+            window.location.href = url;
+        }
+
+        function deleteWallet(walletId) {
+            fetch(`/wallet/delete/${walletId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    alert('Кошелек успешно удален');
+                    location.reload();
+                } else {
+                    alert('Ошибка при удалении кошелька');
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>Крипто Кошелек</h1>
+
+    <div class="button-container">
+        <div class="dropdown">
+            <button id="createWalletBtn">Создать Кошелек</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="handleNetworkSelection('sol')">SOL</a>
+                <a href="#" onclick="handleNetworkSelection('ada')">ADA</a>
+                <a href="#" onclick="handleNetworkSelection('eth')">ETH</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button id="sendTransactionBtn">Отрпавить перевод</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="sendTransaction('sol')">SOL</a>
+                <a href="#" onclick="sendTransaction('ada')">ADA</a>
+                <a href="#" onclick="sendTransaction('eth')">ETH</a>
+            </div>
+        </div>
+        <button id="receiveTransactionBtn">Создать свой токен</button>
+    </div>
+
+    <div id="walletAddress" class="output">
+        <h2>Список созданных кошельков:</h2>
+        <ul>
+            <li th:each="wallet : ${wallets}">
+                <span th:text="${wallet.net_name}"></span>
+                <span th:text="${wallet.walletName}"></span>
+                - Баланс: <span th:text="${wallet.balance}"></span>
+                <button th:onclick="'deleteWallet(' + ${wallet.id} + ')'">Удалить</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    /* Добавим стили для выпадающего списка */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {background-color: #f1f1f1;}
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>
+
+</body>
+</html>
