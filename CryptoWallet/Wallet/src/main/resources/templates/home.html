@@ -36,7 +36,74 @@
                 }
             });
         }
+
+        function showPublicKey(button) {
+            const publicKey = button.getAttribute('data-public-key');
+            const publicKeyContainer = document.createElement('div');
+            publicKeyContainer.className = 'public-key-popup';
+            publicKeyContainer.innerText = publicKey;
+
+            const closeButton = document.createElement('button');
+            closeButton.innerText = 'Закрыть';
+            closeButton.onclick = () => {
+                document.body.removeChild(publicKeyContainer);
+            };
+
+            publicKeyContainer.appendChild(closeButton);
+            document.body.appendChild(publicKeyContainer);
+        }
     </script>
+    <style>
+        /* Добавим стили для выпадающего списка */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1;}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        /* Стили для всплывающего окна с публичным ключом */
+        .public-key-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .public-key-popup button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -70,44 +137,10 @@
                 <span th:text="${wallet.walletName}"></span>
                 - Баланс: <span th:text="${wallet.balance}"></span>
                 <button th:onclick="'deleteWallet(' + ${wallet.id} + ')'">Удалить</button>
+                <button th:attr="data-public-key=${wallet.publicKey}" onclick="showPublicKey(this)">Показать ключ</button>
             </li>
         </ul>
     </div>
 </div>
-
-<style>
-    /* Добавим стили для выпадающего списка */
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-    }
-
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-
-    .dropdown-content a:hover {background-color: #f1f1f1;}
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .dropdown:hover .dropbtn {
-        background-color: #3e8e41;
-    }
-</style>
-
 </body>
 </html>

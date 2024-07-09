@@ -66,6 +66,12 @@
 			<artifactId>cardano-client-backend-blockfrost</artifactId>
 			<version>0.5.1</version>
 		</dependency>
+		<!-- ETH -->
+		<dependency>
+			<groupId>org.web3j</groupId>
+			<artifactId>core</artifactId>
+			<version>4.8.7</version>
+		</dependency>
 	</dependencies>
 
 	<build>
