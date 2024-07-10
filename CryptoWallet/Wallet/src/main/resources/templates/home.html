@@ -16,8 +16,12 @@
             }
         }
 
-        function sendTransaction(network) {
-            const url = `/${network}/send-transaction`;
+        function sendTransaction() {
+            const url = '/wallet/send-transaction';
+            window.location.href = url;
+        }
+        function airdropToken(network) {
+            const url = `/${network}/airdropIndex`;
             window.location.href = url;
         }
 
@@ -52,6 +56,9 @@
             publicKeyContainer.appendChild(closeButton);
             document.body.appendChild(publicKeyContainer);
         }
+
+
+
     </script>
     <style>
         /* Добавим стили для выпадающего списка */
@@ -118,15 +125,15 @@
                 <a href="#" onclick="handleNetworkSelection('eth')">ETH</a>
             </div>
         </div>
+        <button onclick="sendTransaction()">Отправить перевод</button>
         <div class="dropdown">
-            <button id="sendTransactionBtn">Отрпавить перевод</button>
+            <button id="receiveTransactionBtn">Пополнить кошелёк</button>
             <div class="dropdown-content">
-                <a href="#" onclick="sendTransaction('sol')">SOL</a>
-                <a href="#" onclick="sendTransaction('ada')">ADA</a>
-                <a href="#" onclick="sendTransaction('eth')">ETH</a>
+                <a href="#" onclick="airdropToken('sol')">SOL</a>
+                <a href="#" onclick="airdropToken('ada')">ADA</a>
+                <a href="#" onclick="airdropToken('eth')">ETH</a>
             </div>
         </div>
-        <button id="receiveTransactionBtn">Создать свой токен</button>
     </div>
 
     <div id="walletAddress" class="output">

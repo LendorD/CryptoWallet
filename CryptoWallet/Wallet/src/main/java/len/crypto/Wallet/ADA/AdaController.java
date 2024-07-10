@@ -10,6 +10,7 @@ import com.bloxbean.cardano.client.common.model.Networks;
 import com.bloxbean.cardano.client.function.helper.SignerProviders;
 import com.bloxbean.cardano.client.quicktx.QuickTxBuilder;
 import com.bloxbean.cardano.client.quicktx.Tx;
+import com.bloxbean.cardano.client.transaction.model.PaymentTransaction;
 import len.crypto.Wallet.ADA.connector.AdaConnector;
 import len.crypto.Wallet.DB.entity.Wallet;
 import len.crypto.Wallet.DB.service.ServiceWallet;
@@ -98,5 +99,15 @@ public class AdaController {
         log.info("TxId --->{}", result);
         return "redirect:/wallet/home";
     }
+    @GetMapping("/airdropIndex")
+    public String showAirdropToken() {
+        return "airdropToken";
+    }
+    @PostMapping("/airdrop")
+    public String airdpro(@RequestParam String Address, @RequestParam String amount) throws RpcException {
+
+        return "redirect:/wallet/home";
+    }
+
 
 }
